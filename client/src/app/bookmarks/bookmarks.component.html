@@ -17,7 +17,7 @@
 </div>
 <div *ngIf="!isBookmarksLoading">
   <div *ngIf="bookmarks.length < 1" class="my-3 text-slate-200 opacity-70">
-    There no bookmarks saved for this passphrase yet.
+    There are no bookmarks saved for this passphrase yet.
   </div>
   <ul class="rounded-xl  mb-5 overflow-hidden" data-aos="flip-up" *ngIf="bookmarks.length > 0">
     <li *ngFor="let bookmark of bookmarks;"

@@ -1,5 +1,5 @@
 import { provideIcons } from '@ng-icons/core';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormGroup, FormsModule, NgModel, ReactiveFormsModule} from "@angular/forms";
 import {NgIcon} from "@ng-icons/core";
