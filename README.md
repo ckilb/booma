@@ -1,5 +1,8 @@
 # Booma
 
+Booma is an online service that let users store bookmarks without registration.\
+Everything that is needed is a passphrase.
+
 ### Client
 
 - make sure [nvm](https://github.com/nvm-sh/nvm) is installed
