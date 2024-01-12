@@ -1,7 +1,6 @@
 package com.ckilb.booma.bookmark;
 
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "http://booma-angular.s3-website.eu-north-1.amazonaws.com", "https://booma.io"})
-
 public class BookmarkController {
     final BookmarkRepository repository;
 
@@ -26,7 +23,7 @@ public class BookmarkController {
     }
 
     @GetMapping("/bookmarks")
-    @RateLimiter(name = "general", fallbackMethod = "handleRateLimitExceeded")
+    @RateLimiter(name = "general")
     Collection<Bookmark> all(@RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase) {
         return repository.findAllByPassphrase(passphrase);
     }
@@ -59,9 +56,5 @@ public class BookmarkController {
             errors.put(fieldName, errorMessage);
         });
         return errors;
-    }
-
-    private void handleRateLimitExceeded(Throwable throwable) {
-        throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Rate limit exceeded", throwable);
     }
 }
