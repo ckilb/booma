@@ -1,0 +1,30 @@
+<form method="post" (submit)="save()" [formGroup]="form">
+  <div class="rounded-xl bg-white bg-opacity-5 hover:bg-opacity-10 overflow-hidden p-5 flex gap-4">
+    <div class="flex-grow relative">
+      <app-input-text placeholder="https://"
+                      icon="heroLink"
+                      type="url"
+                      name="url"
+                      [formGroup]="form"
+                      [minlength]=8
+                      [maxlength]=1024></app-input-text>
+      <div class="absolute w-full text-fuchsia-500 text-right leading-none">
+        <small *ngIf="form.controls['url'].errors?.['pattern']">Invalid URL</small>
+      </div>
+    </div>
+    <div class="flex-grow relative">
+      <app-input-text placeholder="Title"
+                      icon="heroChatBubbleBottomCenterText"
+                      [formGroup]="form"
+                      [minlength]=3
+                      [maxlength]=1024
+                      name="title"></app-input-text>
+      <div class="absolute w-full text-fuchsia-500 text-right leading-none">
+        <small *ngIf="form.controls['title'].errors?.['minlength']">Minimum length is {{ form.controls['title'].errors?.['minlength']['requiredLength'] }}.</small>
+      </div>
+    </div>
+    <div class="flex-none">
+      <app-button-primary icon="heroPlus" label="Add" [disabled]="form.invalid"></app-button-primary>
+    </div>
+  </div>
+</form>

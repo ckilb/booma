@@ -1,0 +1,17 @@
+<div class="flex items-center">
+  <div class="flex-grow">
+    <a class="inline-block w-full text-left text-fuchsia-50 px-4 py-2"
+       href="{{ bookmark.url }}"
+       target="_blank">
+      <img src="{{ 'https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=' + encodeURI(bookmark.url) }}"
+           alt="{{ bookmark.title }}"
+           class="w-10 inline-block mr-1 border rounded-xl border-slate-800"/>
+      {{ bookmark.title }}
+    </a>
+  </div>
+  <div class="flex-none px-4">
+    <button (click)="delete()" class="text-[0px] text-fuchsia-600 opacity-50 hover:opacity-100 transition-opacity ease-in-out">
+      <ng-icon name="heroTrash" size="28"></ng-icon>
+    </button>
+  </div>
+</div>

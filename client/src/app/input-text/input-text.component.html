@@ -1,0 +1,20 @@
+<div class="flex items-center gap-2 group">
+  <label class="flex-none text-[0px] text-fuchsia-100 group-focus-within:scale-125 transition-all ease-in-out cursor-pointer"
+         [for]="id">
+    <ng-icon name="{{ icon }}" size="28"></ng-icon>
+  </label>
+  <div class="flex-grow relative" [formGroup]="formGroup">
+    <input type="{{ type }}"
+           [id]="id"
+           [attr.minlength]="minlength"
+           [attr.maxlength]="maxlength"
+           [attr.placeholder]="placeholder"
+           [name]="name"
+           [formControlName]="name"
+           class="text-md rounded-xl px-4 py-2 border-2 border-slate-400 disabled:bg-slate-400 focus:bg-fuchsia-50 focus:border-fuchsia-500 outline-none w-full inline-block"
+           autocomplete="off"
+           required
+    />
+  </div>
+</div>
+

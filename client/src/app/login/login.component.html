@@ -1,0 +1,15 @@
+<form method="post" (submit)="login()" [formGroup]="form">
+  <div class="flex gap-4 text-left">
+    <div class="flex-grow">
+      <app-input-text placeholder="Enter your passphrase"
+                      icon="heroKey"
+                      name="passphrase"
+                      [formGroup]="form"
+                      [minlength]=8
+                      [maxlength]=50></app-input-text>
+    </div>
+    <div class="flex-none">
+      <app-button-primary label="Login" [disabled]=form.invalid></app-button-primary>
+    </div>
+  </div>
+</form>
