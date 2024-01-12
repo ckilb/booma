@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="mt-8 md:mt-0 md:flex-none">
-      <app-button-primary icon="heroPlus" label="Add" [disabled]="form.invalid"></app-button-primary>
+      <app-button-primary icon="heroPlus" label="Add" [disabled]="form.invalid || isSaving"></app-button-primary>
     </div>
   </div>
 </form>

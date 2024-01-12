@@ -23,8 +23,8 @@ export class BookmarkCreateComponent {
   @Output() onSavedEvent = new EventEmitter<void>();
 
   form: FormGroup;
-
   isCustomTitleMode = false;
+  isSaving = false;
 
   constructor(
     private fb: FormBuilder
@@ -75,6 +75,8 @@ export class BookmarkCreateComponent {
   }
 
   save() {
+    this.isSaving = true;
+
     const bookmark: Bookmark = {
       title: this.form.get('title')?.value,
       url: this.form.get('url')?.value,
@@ -90,6 +92,7 @@ export class BookmarkCreateComponent {
       body: JSON.stringify(bookmark)
     })
       .then(resp => {
+        this.isSaving = false;
         if (!resp.ok) {
           alert('Could not save bookmark.');
         }

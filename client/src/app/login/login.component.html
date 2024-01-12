@@ -7,6 +7,9 @@
                       [formGroup]="form"
                       [minlength]=8
                       [maxlength]=50></app-input-text>
+      <div class="absolute w-full text-fuchsia-500 text-center mt-1 leading-none">
+        <small *ngIf="form.controls['passphrase'].errors?.['minlength']">Minimum length is {{ form.controls['passphrase'].errors?.['minlength']['requiredLength'] }}</small>
+      </div>
     </div>
     <div class="flex-none">
       <app-button-primary label="Login" [disabled]=form.invalid></app-button-primary>
