@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "title", "url", "passphrase" }) })
+@Table(
+    uniqueConstraints = { @UniqueConstraint(columnNames = { "title", "url", "passphrase" }) },
+    indexes = { @Index(columnList = "passphrase")}
+)
 public class Bookmark {
 
 
