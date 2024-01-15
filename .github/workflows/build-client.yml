@@ -1,0 +1,56 @@
+name: Deploy Client
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Set up NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.5.0
+          cache: 'npm'
+          cache-dependency-path: ./client
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build Angular
+        working-directory: ./client
+        run:  npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: client-artifact
+          path: client/dist/angularclient/browser
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          path: ./client-artifact
+          name: client-artifact
+
+      - name: ls
+        run: ls -la
+        
+      - name: Deploy to S3
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_bucket: booma.io
+          source_dir: client-artifact
+          destination_dir: ''

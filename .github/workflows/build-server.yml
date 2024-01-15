@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Server
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
       - name: Upload JAR
         uses: actions/upload-artifact@v2
         with:
-          name: artifact
+          name: server-artifact
           path: server/build/libs/booma-0.0.1-SNAPSHOT.jar
   
   deploy:
@@ -34,7 +34,7 @@ jobs:
       - name: Download JAR
         uses: actions/download-artifact@v2
         with:
-          name: artifact
+          name: server-artifact
         
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
