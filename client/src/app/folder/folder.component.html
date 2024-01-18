@@ -1,12 +1,11 @@
 <div class="flex items-center">
   <div class="flex-grow min-w-0">
     <a class="inline-flex gap-2 items-center w-full text-left text-fuchsia-50 px-4 py-2 whitespace-nowrap overflow-hidden text-ellipsis"
-       href="{{ bookmark.url }}"
-       target="_blank">
-      <img src="{{ 'https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=' + encodeURI(bookmark.url) }}"
-           alt="{{ bookmark.title }}"
-           class="w-10 inline-block mr-1 border rounded-xl border-slate-800"/>
-      <div>{{ bookmark.title }}</div>
+       [routerLink]="['/bookmarks', passphrase, folder.path]">
+      <div class="inline-flex w-10 h-10 mr-1  rounded-xl border-slate-800 justify-center items-center">
+        <ng-icon name="heroFolder" size="28"></ng-icon>
+      </div>
+      <div>{{ folder.title }}</div>
     </a>
   </div>
   <div class="flex-none px-4 text-[0px]">

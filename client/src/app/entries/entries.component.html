@@ -1,0 +1,61 @@
+<div class="flex gap-2 mb-5">
+  <div class="flex-grow">
+    <app-input-text icon="heroKey"
+                    name="passphrase"
+                    [formGroup]="form"></app-input-text>
+  </div>
+  <div class="flex-none">
+    <app-button-primary icon="heroArrowRightOnRectangle"
+                        label="Add"
+                        [disabled]="false"
+                        (click)="logout()"></app-button-primary>
+  </div>
+</div>
+
+<div class="text-xl text-center my-8" data-aos="zoom-in" *ngIf="isBookmarksLoading">
+  <app-loading-icon></app-loading-icon>
+</div>
+<div *ngIf="!isBookmarksLoading">
+  <ul class="rounded-xl mb-5 overflow-hidden" data-aos="flip-up">
+    <li *ngIf="folder" class="border-b mb-0.5 border-1 border-transparent bg-white bg-opacity-10 hover:bg-opacity-15">
+      <div class="px-4 py-2">
+        <a class="inline-flex items-center gap-2 w-full text-left text-fuchsia-50 font-bold tracking-wider"
+           href="#"
+           [routerLink]="['/bookmarks', passphrase]">
+          <div class="inline-flex w-10 h-10 mr-1  rounded-xl border-slate-800 justify-center items-center">
+            <ng-icon name="heroChevronDoubleLeft" size="28"></ng-icon>
+          </div>
+
+          <div>{{ folder }}</div>
+        </a>
+      </div>
+    </li>
+    <li *ngIf="entries.length < 1"
+        class="border-b mb-0.5 border-1 border-transparent bg-white bg-opacity-5 hover:bg-opacity-10 p-5 text-white">
+      There are no bookmarks saved yet.
+    </li>
+    <ng-container *ngIf="entries.length > 0">
+      <li *ngFor="let entry of entries;"
+          class="border-b mb-0.5 border-1 border-transparent bg-white bg-opacity-5 hover:bg-opacity-10"
+          >
+        <app-bookmark [passphrase]="passphrase"
+                      [bookmark]="entry.bookmark"
+                      (onDeletedEvent)="deleteEntry(entry.id)"
+                      *ngIf="entry.bookmark"></app-bookmark>
+
+        <app-folder  [passphrase]="passphrase"
+                     [folder]="entry.folder"
+                     (onDeletedEvent)="deleteEntry(entry.id)"
+                     *ngIf="entry.folder"></app-folder>
+      </li>
+    </ng-container>
+    <li class="border-b mb-0.5 border-1 border-transparent bg-white bg-opacity-5 hover:bg-opacity-10"
+        *ngIf="entries.length > 0 || folder">
+      <app-folder-create [passphrase]="passphrase" (onSavedEvent)="loadEntries()"></app-folder-create>
+    </li>
+  </ul>
+
+  <app-bookmark-create [passphrase]="passphrase"
+                       [folder]="folder"
+                       (onSavedEvent)="loadEntries()"></app-bookmark-create>
+</div>

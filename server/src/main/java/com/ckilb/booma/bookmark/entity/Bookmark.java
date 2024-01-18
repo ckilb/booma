@@ -1,18 +1,14 @@
-package com.ckilb.booma.bookmark;
+package com.ckilb.booma.bookmark.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
-@Table(
-    uniqueConstraints = { @UniqueConstraint(columnNames = { "title", "url", "passphrase" }) },
-    indexes = { @Index(columnList = "passphrase")}
-)
 public class Bookmark {
-
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
@@ -25,7 +21,9 @@ public class Bookmark {
     private String url;
 
     @JsonIgnore
-    private String passphrase;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Entry entry;
 
     public Long getId() {
         return id;
@@ -43,19 +41,19 @@ public class Bookmark {
         this.title = title;
     }
 
-    public String getPassphrase() {
-        return passphrase;
-    }
-
-    public void setPassphrase(String passphrase) {
-        this.passphrase = passphrase;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 }

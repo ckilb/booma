@@ -1,0 +1,32 @@
+<div class="px-4 py-2">
+  <a class="inline-flex items-center gap-2 w-full text-left text-fuchsia-50 opacity-50"
+     href="#"
+     target="_blank"
+     (click)="enableInsertMode($event)"
+     *ngIf="!isInsertMode">
+    <div class="inline-flex w-10 h-10 mr-1  rounded-xl border-slate-800 justify-center items-center">
+      <ng-icon name="heroFolderPlus" size="28"></ng-icon>
+    </div>
+
+    <div>Add folder</div>
+  </a>
+
+  <form method="post" (submit)="save()" [formGroup]="form" *ngIf="isInsertMode" >
+    <div class="flex gap-2" data-aos="fade-in">
+        <div class="flex-grow">
+          <app-input-text placeholder="Folder title"
+                          icon="heroFolderPlus"
+                          [formGroup]="form"
+                          [focus]="focusEventEmitter"
+                          [minlength]=3
+                          [maxlength]=1024
+                          name="title"></app-input-text>
+        </div>
+
+        <div class="flex-none">
+          <app-button-primary icon="heroPlus" label="Add" [disabled]="form.invalid || isSaving"></app-button-primary>
+        </div>
+    </div>
+  </form>
+</div>
+

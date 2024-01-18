@@ -3,6 +3,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.1'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'idea'
 }
 
 group = 'com.ckilb'
@@ -25,7 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation "io.github.resilience4j:resilience4j-spring-boot3:2.2.0"
-	implementation 'mysql:mysql-connector-java:8.0.23'
+	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'com.github.slugify:slugify:3.0.+'
 	implementation group: 'com.amazonaws.secretsmanager', name: 'aws-secretsmanager-jdbc', version: '2.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.h2database:h2'
@@ -33,4 +35,11 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
 }

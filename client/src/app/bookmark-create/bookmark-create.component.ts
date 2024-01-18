@@ -20,6 +20,7 @@ import {CommonModule} from "@angular/common";
 })
 export class BookmarkCreateComponent {
   @Input() passphrase = '';
+  @Input() folder = '';
   @Output() onSavedEvent = new EventEmitter<void>();
 
   form: FormGroup;
@@ -80,6 +81,7 @@ export class BookmarkCreateComponent {
     const bookmark: Bookmark = {
       title: this.form.get('title')?.value,
       url: this.form.get('url')?.value,
+      folder: this.folder
     }
 
     fetch(environment.apiUrl + '/bookmarks', {
@@ -97,9 +99,6 @@ export class BookmarkCreateComponent {
           alert('Could not save bookmark.');
         }
 
-        return resp.json()
-      })
-      .then(() => {
         this.form.get('title')?.setValue('');
         this.form.get('url')?.setValue('');
         this.isCustomTitleMode = false;
