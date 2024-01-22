@@ -1,11 +1,12 @@
 name: Deploy Server
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Run Tests"]
+    types:
+      - completed
 
 jobs:
-  build:
+  build-server:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -13,9 +14,10 @@ jobs:
       - uses: actions/checkout@main
 
       - name: Set up Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 17
+          distribution: oracle
 
       - name: Build with Gradle
         working-directory: ./server
@@ -27,8 +29,8 @@ jobs:
           name: server-artifact
           path: server/build/libs/booma-0.0.1-SNAPSHOT.jar
   
-  deploy:
-    needs: build
+  deploy-server:
+    needs: build-server
     runs-on: ubuntu-latest
     steps:
       - name: Download JAR
