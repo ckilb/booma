@@ -30,7 +30,7 @@ public class FolderSaver {
             return false;
         }
 
-        if (request.getTitle() == null || request.getTitle().isBlank()) {
+        if (request.getTitle().isBlank()) {
             return false;
         }
 

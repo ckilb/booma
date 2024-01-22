@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Locale;
-
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "http://booma-angular.s3-website.eu-north-1.amazonaws.com", "https://booma.io"})
 @RateLimiter(name = "general")

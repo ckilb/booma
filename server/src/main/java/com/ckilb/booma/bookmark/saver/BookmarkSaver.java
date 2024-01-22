@@ -5,7 +5,10 @@ import com.ckilb.booma.bookmark.entity.Bookmark;
 import com.ckilb.booma.bookmark.entity.Entry;
 import com.ckilb.booma.bookmark.repository.BookmarkRepository;
 import com.ckilb.booma.bookmark.repository.EntryRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class BookmarkSaver {
@@ -23,8 +26,7 @@ public class BookmarkSaver {
             return false;
         }
 
-        var parent = this.getParentEntry(request.getFolder(), passphrase);
-        var entry = this.createEntry(parent, passphrase);;
+        var entry = this.createEntry(request, passphrase);;
         var bookmark = new Bookmark();
 
         bookmark.setTitle(request.getTitle());
@@ -36,25 +38,27 @@ public class BookmarkSaver {
         return true;
     }
 
-    private Entry getParentEntry(String folderPath, String passphrase) {
-         if (folderPath == null || folderPath.isBlank()) {
-             return null;
+    private Optional<Entry> getParentEntry(@NonNull String folderPath, String passphrase) {
+         if (folderPath.isBlank()) {
+             return Optional.empty();
          }
 
-         var parent = this.entryRepository.findOneByPassphraseAndFolderPath(
+         return this.entryRepository.findOneByPassphraseAndFolderPath(
             passphrase,
             folderPath
         );
-
-        return parent.orElse(null);
-
     }
 
-    private Entry createEntry(Entry parent, String passphrase) {
+    private Entry createEntry(BookmarkRequest request, String passphrase) {
         var entry = new Entry();
 
+        if (request.getFolder().isPresent()) {
+            var parent = this.getParentEntry(request.getFolder().get(), passphrase);
+
+            parent.ifPresent(entry::setParent);
+        }
+
         entry.setPassphrase(passphrase);
-        entry.setParent(parent);
 
         this.entryRepository.saveAndFlush(entry);
 

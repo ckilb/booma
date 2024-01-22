@@ -3,6 +3,8 @@ package com.ckilb.booma.bookmark.dto;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
+import java.util.Optional;
+
 public class BookmarkRequest {
     @NotEmpty
     private String title;
@@ -29,8 +31,8 @@ public class BookmarkRequest {
         this.url = url;
     }
 
-    public String getFolder() {
-        return folder;
+    public Optional<String> getFolder() {
+        return this.folder == null ? Optional.empty() : Optional.of(this.folder);
     }
 
     public void setFolder(String folder) {
