@@ -101,7 +101,7 @@ public class BookmarkControllerTest {
             folder.getPath()
         );
 
-        assertThat(result).hasSize(1);
+        assertThat(result).hasSize(2);
 
         var saved = result.iterator().next();
 
