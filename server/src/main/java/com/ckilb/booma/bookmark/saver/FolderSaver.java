@@ -7,11 +7,13 @@ import com.ckilb.booma.bookmark.repository.EntryRepository;
 import com.ckilb.booma.bookmark.repository.FolderRepository;
 import com.github.slugify.Slugify;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
 import java.util.UUID;
 
 @Component
+@Transactional
 public class FolderSaver {
 
     private final EntryRepository entryRepository;
@@ -42,6 +44,8 @@ public class FolderSaver {
         folder.setEntry(entry);
 
         this.folderRepository.saveAndFlush(folder);
+
+        entry.setFolder(folder);
 
         return true;
     }

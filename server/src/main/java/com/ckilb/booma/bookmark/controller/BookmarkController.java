@@ -21,7 +21,7 @@ public class BookmarkController {
     }
 
     @PostMapping("/bookmarks")
-    ResponseEntity<Bookmark> saveBookmark(@Valid  @RequestBody BookmarkRequest bookmarkRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase) {
+    ResponseEntity<Bookmark> saveBookmark(@Valid @RequestBody BookmarkRequest bookmarkRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase) {
         var isSaved = this.saver.saveBookmark(bookmarkRequest, passphrase);
 
         if (!isSaved) {

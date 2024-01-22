@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
 import java.util.Collection;
 
@@ -29,12 +30,14 @@ public class Entry {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Entry> children;
 
-    @OneToOne(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Nullable
     private Bookmark bookmark;
 
-    @OneToOne(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Nullable
     private Folder folder;
 
     public Long getId() {
@@ -53,7 +56,7 @@ public class Entry {
         this.passphrase = passphrase;
     }
 
-    public Bookmark getBookmark() {
+    public @Nullable  Bookmark getBookmark() {
         return bookmark;
     }
 
@@ -61,7 +64,7 @@ public class Entry {
         this.bookmark = bookmark;
     }
 
-    public Folder getFolder() {
+    public @Nullable Folder getFolder() {
         return folder;
     }
 

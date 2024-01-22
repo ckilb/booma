@@ -7,10 +7,12 @@ import com.ckilb.booma.bookmark.repository.BookmarkRepository;
 import com.ckilb.booma.bookmark.repository.EntryRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Component
+@Transactional
 public class BookmarkSaver {
 
     private final EntryRepository entryRepository;
@@ -35,6 +37,8 @@ public class BookmarkSaver {
 
         this.bookmarkRepository.saveAndFlush(bookmark);
 
+        entry.setBookmark(bookmark);
+
         return true;
     }
 
@@ -53,7 +57,8 @@ public class BookmarkSaver {
         var entry = new Entry();
 
         if (request.getFolder().isPresent()) {
-            var parent = this.getParentEntry(request.getFolder().get(), passphrase);
+            var folderPath = request.getFolder().get();
+            var parent = this.getParentEntry(folderPath, passphrase);
 
             parent.ifPresent(entry::setParent);
         }
