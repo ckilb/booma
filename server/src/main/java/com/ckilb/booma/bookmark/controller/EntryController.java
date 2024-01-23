@@ -21,7 +21,7 @@ public class EntryController {
     }
 
     @GetMapping("/entries")
-    Collection<Entry> all(
+    Collection<Entry> getEntries(
             @RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase,
             @RequestParam(defaultValue = "") String folder
     ) {
@@ -33,7 +33,7 @@ public class EntryController {
     }
 
     @DeleteMapping("/entries/{id}")
-    ResponseEntity<Void> deleteBookmark(@PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase) {
+    ResponseEntity<Void> deleteEntry(@PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String passphrase) {
         this.repository.deleteByIdAndPassphrase(id, passphrase);
 
         return ResponseEntity.noContent().build();
