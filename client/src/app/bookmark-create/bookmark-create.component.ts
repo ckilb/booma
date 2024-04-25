@@ -30,7 +30,7 @@ export class BookmarkCreateComponent {
   constructor(
     private fb: FormBuilder
   ) {
-    const urlPattern = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+    const urlPattern = '(https?|ftp):\\/\\/(-\\.)?([^\\s\\/?\\.#]+\\.?)+(\\/[^\\s]*)?';
 
     this.form = this.fb.group({
       title: ['', [
